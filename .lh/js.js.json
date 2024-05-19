@@ -1,0 +1,26 @@
+{
+    "sourceFile": "js.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1716126911934,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1716133004814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const PROD_URL = ['https://cdn.jsdelivr.net/gh/melkeades/wf-shopy/dist/main.js']\r\n+const PROD_URL = ['https://cdn.jsdelivr.net/gh/melkeades/wf-shopy/dist/mainx.js']\r\n const LOCALHOST_URL = ['http://localhost:5173/@vite/client', 'http://localhost:5173/main.js']\r\n let devMode = document.devMode === true\r\n if (devMode) console.log('%cdevMode is ON', 'font-size: 1.5rem; background: midnightblue;')\r\n \r\n@@ -13,12 +13,21 @@\n   })\r\n }\r\n \r\n fetch(devMode ? LOCALHOST_URL[0] : PROD_URL[0], devMode ? {} : { method: 'HEAD' })\r\n-  .then((response) => {\r\n-    if (!response.ok) devMode = !devMode\r\n+.then(response=>{\r\n+if(!response.ok) {\r\n+console.log('no prod')\r\n+devMode = !devMode}\r\n+})\r\n+    .catch(error => {\r\n+      devMode = !devMode\r\n+        console.log('catch', error)\r\n+    })\r\n+    .finally(() => {\r\n+    \r\n     const scripts = createScripts(devMode ? LOCALHOST_URL : PROD_URL)\r\n-    scripts.forEach((script) => document.body.appendChild(script))\r\n-  })\r\n-  .catch((error) => {\r\n-    console.log('Error:', error)\r\n-  })\r\n+    try{\r\n+    scripts.forEach(script => document.body.appendChild(script))\r\n+    }catch(error){ console.log(error)}\r\n+    console.log('fin',devMode, scripts)\r\n+    })\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1716133255775,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,14 +15,14 @@\n \r\n fetch(devMode ? LOCALHOST_URL[0] : PROD_URL[0], devMode ? {} : { method: 'HEAD' })\r\n   .then((response) => {\r\n     if (!response.ok) {\r\n-      console.log('no prod')\r\n-      devMode = !devMode\r\n+      console.log('Prod scripts failed, trying local')\r\n+      devMode = true\r\n     }\r\n   })\r\n   .catch((error) => {\r\n-    devMode = !devMode\r\n+    devMode =false\r\n     console.log(error)\r\n   })\r\n   .finally(() => {\r\n     const scripts = createScripts(devMode ? LOCALHOST_URL : PROD_URL)\r\n"
+                }
+            ],
+            "date": 1716126911934,
+            "name": "Commit-0",
+            "content": "const PROD_URL = ['https://cdn.jsdelivr.net/gh/melkeades/wf-shopy/dist/main.js']\r\nconst LOCALHOST_URL = ['http://localhost:5173/@vite/client', 'http://localhost:5173/main.js']\r\nlet devMode = document.devMode === true\r\nif (devMode) console.log('%cdevMode is ON', 'font-size: 1.5rem; background: midnightblue;')\r\n\r\nfunction createScripts(arr) {\r\n  return arr.map((url) => {\r\n    const s = document.createElement('script')\r\n    s.src = url\r\n    //s.defer = true\r\n    if (devMode) s.type = 'module'\r\n    return s\r\n  })\r\n}\r\n\r\nfetch(devMode ? LOCALHOST_URL[0] : PROD_URL[0], devMode ? {} : { method: 'HEAD' })\r\n    .then(response => {\r\n        if (!response.ok) devMode = !devMode\r\n\t\t\t\tconst scripts = createScripts(devMode ? LOCALHOST_URL : PROD_URL)\r\n\t\t\t\tscripts.forEach(script => document.body.appendChild(script))\r\n    })\r\n    .catch(error => {\r\n        console.log('Error:', error)\r\n    });"
+        }
+    ]
+}

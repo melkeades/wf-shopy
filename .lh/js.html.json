@@ -1,0 +1,18 @@
+{
+    "sourceFile": "js.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1716160705070,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1716160705070,
+            "name": "Commit-0",
+            "content": "<script>\r\nconst PROD_URL = ['https://cdn.jsdelivr.net/gh/melkeades/wf-shopy/dist/main.js']\r\nconst LOCAL_URL = ['http://localhost:5173/@vite/client', 'http://localhost:5173/main.js']\r\nlet devMode = document.devMode === true\r\nif (devMode) console.log('%cdevMode is ON', 'font-size: 1.5rem; background: midnightblue;')\r\nlet blob\r\n\r\nfetch(devMode ? LOCAL_URL[0] : PROD_URL[0])\r\n \r\n  .then((response) => {\r\n      if (!response.ok) {\r\n      console.log('Prod scripts failed to load, trying local')\r\n      devMode = true\r\n    }\r\n  return response.text()\r\n  })\r\n   .then((scriptText) => {\r\n    blob = new Blob([scriptText], { type: 'text/javascript' })\r\n  })\r\n  .catch((error) => {\r\n    devMode = false\r\n    console.log(error)\r\n  })\r\n  .finally(() => {\r\n  const blobUrl = blob ? [URL.createObjectURL(blob)] : PROD_URL\r\n    const scriptsUrls = devMode ? LOCAL_URL : blobUrl\r\n    const scripts = scriptsUrls.map((url) => {\r\n      const s = document.createElement('script')\r\n      s.src = url\r\n      //s.defer = true\r\n      if (devMode) s.type = 'module'\r\n      return s\r\n    })\r\n    scripts.forEach((script) => document.body.appendChild(script))\r\n  })\r\n</script>"
+        }
+    ]
+}

@@ -14,5 +14,6 @@
   "dependencies": {
     "babylonjs": "^7.5.0",
     "gsap": "^3.12.5"
-  }
+  },
+  "packageManager": "yarn@4.2.2"
 }
